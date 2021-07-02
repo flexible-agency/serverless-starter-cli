@@ -1,0 +1,45 @@
+{
+  "name": "serverless-starter-cli",
+  "version": "1.0.0",
+  "description": "A CLI tool that acts as a helper companion for serverless-starter.",
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "husky install && husky add .husky/pre-commit 'yarn lint-staged'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "starter": "./src/index.js"
+  },
+  "dependencies": {
+    "commander": "^8.0.0",
+    "degit": "^2.8.4",
+    "inquirer": "^8.1.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flexible-agency/serverless-starter-cli.git"
+  },
+  "keywords": [
+    "serverless",
+    "boilerplate",
+    "cli",
+    "sls",
+    "lambda",
+    "aws"
+  ],
+  "author": "Thomas Schoffelen <thomas@schof.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flexible-agency/serverless-starter-cli/issues"
+  },
+  "homepage": "https://github.com/flexible-agency/serverless-starter-cli#readme",
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
