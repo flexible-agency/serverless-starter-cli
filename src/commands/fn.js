@@ -71,7 +71,7 @@ const fn = async (functionName) => {
               },
             ]
           : schedule
-          ? [schedule]
+          ? [{ schedule }]
           : undefined,
     },
   };
