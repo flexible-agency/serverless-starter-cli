@@ -40,6 +40,6 @@
   },
   "homepage": "https://github.com/flexible-agency/serverless-starter-cli#readme",
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "src/!templates/**/*": "prettier --write --ignore-unknown"
   }
 }
