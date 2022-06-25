@@ -7,7 +7,7 @@ const { findServerlessFile } = require("../lib/filesystem");
 
 const fn = async (functionName) => {
   const sls = findServerlessFile();
-  const dir = pa.join("src", "functions", functionName.replace("--", pa.sep));
+  const dir = pa.join("src", "functions", functionName.replace(/--/g, pa.sep));
   const name = functionName.replace(pa.sep, "--");
   const templates = pa.join(__dirname, "..", "templates");
   const root = pa.join(pa.dirname(sls), dir);
@@ -17,7 +17,7 @@ const fn = async (functionName) => {
     {
       type: "input",
       name: "url",
-      default: `/${functionName.replace("--", "/").replace(/(^\/|\/$)/g, "")}`,
+      default: `/${functionName.replace(/--/g, "/").replace(/(^\/|\/$)/g, "")}`,
       message: "HTTP path",
     },
     {
