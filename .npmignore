@@ -1,3 +1,5 @@
+.yarn
+.history
 .husky
 .idea
 .prettierrc.json
