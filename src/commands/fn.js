@@ -11,6 +11,12 @@ const fn = async (functionName) => {
   const name = functionName.replace(pa.sep, "--");
   const templates = pa.join(__dirname, "..", "templates");
   const root = pa.join(pa.dirname(sls), dir);
+  const middlewarePath = pa.join(
+    pa.dirname(sls),
+    "src",
+    "lib",
+    "middleware.js"
+  );
 
   // ask some questions
   const { method, url, auth, schedule } = await inquirer.prompt([
@@ -78,11 +84,23 @@ const fn = async (functionName) => {
   fs.writeFileSync(pa.join(root, "function.yml"), yaml.dump(fnYaml), "utf8");
 
   // add handler.js
+  const originalMiddleware = "@flexible-agency/serverless-middleware";
+  let middlewareImport = originalMiddleware;
+  try {
+    fs.statSync(middlewarePath);
+    // file exists, so use that as the middleware path:
+    middlewareImport = pa.relative(root, middlewarePath);
+    console.log({middlewareImport})
+  } catch (e) {
+    console.log(e);
+  }
   const handler = auth ? "handler--auth.js" : "handler.js";
-  fs.copyFileSync(
+  let handlerContent = fs.readFileSync(
     pa.join(templates, "fn", handler),
-    pa.join(root, "handler.js")
+    "utf8"
   );
+  handlerContent = handlerContent.replace(originalMiddleware, middlewareImport);
+  fs.writeFileSync(pa.join(root, "handler.js"), handlerContent, "utf8");
 
   // add entry in serverless.yml
   // TODO: this is a very hacky way to insert a line without updating the rest of the file
