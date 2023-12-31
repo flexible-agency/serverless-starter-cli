@@ -90,9 +90,9 @@ const fn = async (functionName) => {
     fs.statSync(middlewarePath);
     // file exists, so use that as the middleware path:
     middlewareImport = pa.relative(root, middlewarePath);
-    console.log({middlewareImport})
+    console.log({ middlewareImport });
   } catch (e) {
-    console.log(e);
+    // file doesn't exist, so use the original middleware
   }
   const handler = auth ? "handler--auth.js" : "handler.js";
   let handlerContent = fs.readFileSync(
