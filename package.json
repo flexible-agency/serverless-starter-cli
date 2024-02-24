@@ -1,6 +1,6 @@
 {
   "name": "serverless-starter-cli",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "A CLI tool that acts as a helper companion for serverless-starter.",
   "main": "src/index.js",
   "scripts": {
