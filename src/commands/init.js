@@ -17,7 +17,7 @@ const init = async () => {
   const dest = pa.join(process.cwd(), name);
 
   // clone repo
-  const emitter = degit("flexible-agency/serverless-starter#master");
+  const emitter = degit("flexible-agency/serverless-starter#main");
   emitter.on("info", (info) => {
     console.log(info.message);
   });
@@ -35,7 +35,12 @@ const init = async () => {
   slsYaml[0] = `service: ${name}`;
   fs.writeFileSync(sls, slsYaml.join("\n"), "utf8");
 
-  // TODO: run git init
+  // run git init in the shell
+  try {
+    require("child_process").execSync("git init", { cwd: dest });
+  } catch (e) {
+    // ignore
+  }
 
   console.log(`Done - to get started:\n\n  cd ${name} && yarn\n\n`);
 };
