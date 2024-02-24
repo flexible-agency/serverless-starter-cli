@@ -4,22 +4,21 @@
   "description": "A CLI tool that acts as a helper companion for serverless-starter.",
   "main": "src/index.js",
   "scripts": {
-    "prepare": "husky install && husky add .husky/pre-commit 'yarn lint-staged'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky"
   },
   "bin": {
     "starter": "./src/index.js"
   },
   "dependencies": {
-    "commander": "^8.0.0",
+    "commander": "^8.3.0",
     "degit": "^2.8.4",
-    "inquirer": "^8.1.1",
+    "inquirer": "^8.2.6",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
-    "prettier": "^2.3.1"
+    "husky": "^9.0.11",
+    "lint-staged": "^11.2.6",
+    "prettier": "^3.2.5"
   },
   "repository": {
     "type": "git",
