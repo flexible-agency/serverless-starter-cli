@@ -1,4 +1,4 @@
-import { middleware } from "@flexible-agency/serverless-middleware";
+import { middleware } from "@includable/serverless-middleware";
 
 const dependencies = () => ({});
 
