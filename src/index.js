@@ -15,6 +15,8 @@ program
 program
   .command("fn <function-name>")
   .description("create a new function")
+  .option("-t, --ts", "Typescript")
+  .option("-s, --simple", "No middleware")
   .action((...args) => require("./commands/fn")(...args));
 
 program.parse();

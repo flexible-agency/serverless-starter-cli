@@ -5,7 +5,9 @@ const inquirer = require("inquirer");
 
 const { findServerlessFile } = require("../lib/filesystem");
 
-const fn = async (functionName) => {
+const fn = async (functionName, options) => {
+  const { ts, simple } = options;
+
   const sls = findServerlessFile();
   const dir = pa.join("src", "functions", functionName.replace(/--/g, pa.sep));
   const name = functionName.replace(pa.sep, "--");
@@ -15,7 +17,7 @@ const fn = async (functionName) => {
     pa.dirname(sls),
     "src",
     "lib",
-    "middleware.js"
+    "middleware.js",
   );
 
   // ask some questions
@@ -77,8 +79,8 @@ const fn = async (functionName) => {
               },
             ]
           : schedule
-          ? [{ schedule }]
-          : undefined,
+            ? [{ schedule }]
+            : undefined,
     },
   };
   fs.writeFileSync(pa.join(root, "function.yml"), yaml.dump(fnYaml), "utf8");
@@ -94,13 +96,21 @@ const fn = async (functionName) => {
   } catch (e) {
     // file doesn't exist, so use the original middleware
   }
-  const handler = auth ? "handler--auth.js" : "handler.js";
+  const handler = auth
+    ? "handler--auth.js"
+    : simple
+      ? "handler--simple.js"
+      : "handler.js";
   let handlerContent = fs.readFileSync(
     pa.join(templates, "fn", handler),
-    "utf8"
+    "utf8",
   );
   handlerContent = handlerContent.replace(originalMiddleware, middlewareImport);
-  fs.writeFileSync(pa.join(root, "handler.js"), handlerContent, "utf8");
+  fs.writeFileSync(
+    pa.join(root, `handler.${ts ? "ts" : "js"}`),
+    handlerContent,
+    "utf8",
+  );
 
   // add entry in serverless.yml
   // TODO: this is a very hacky way to insert a line without updating the rest of the file
@@ -142,7 +152,7 @@ const fn = async (functionName) => {
   fs.writeFileSync(
     sls,
     [...beforeFunctions, ...functionsList, ...afterFunctions].join("\n"),
-    "utf8"
+    "utf8",
   );
 };
 
